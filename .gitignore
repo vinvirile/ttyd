@@ -36,3 +36,10 @@ compile_commands.json
 
 # Files for in-development testing
 data/*
+
+# Game disc images (do not commit)
+*.iso
+*.gcm
+*.bin
+*.ciso
+*.wbfs

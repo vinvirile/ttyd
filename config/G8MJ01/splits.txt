@@ -48,7 +48,7 @@ sequence/seq_title.c:
 	.sdata2     start:0x80419480 end:0x80419510
 	.sbss2      start:0x80422F68 end:0x80422F70
 
-seqdef.c:
+sequence/seqdef.c:
 	.data       start:0x80302E40 end:0x80302EA0
 
 driver/bgdrv.c:

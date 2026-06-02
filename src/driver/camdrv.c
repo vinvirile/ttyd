@@ -220,3 +220,11 @@ CameraEntry* camGetPtr(CameraId camId) {
 CameraEntry* camGetCurPtr(void) {
 	return camPtrTbl[currentCamNo];
 }
+
+s32 camGetCurNo(void) {
+	return currentCamNo;
+}
+
+void camSetCurNo(s32 camNo) {
+	currentCamNo = camNo;
+}

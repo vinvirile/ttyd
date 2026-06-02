@@ -15,10 +15,12 @@
 #define DISP_MAX_ENTRIES 1024
 
 //.sdata
-f32 offset_tbl[] = {
-	400000.0f, 400000.0f, 600000.0f, 100000.0f, 100000.0f, 
-	300000.0f, 900000.0f, 1100000.0f, 1000000.0f, 500000.0f, 
-	700000.0f //700K new in retail
+static f32 offset_tbl[] = {
+	400000.0f, 400000.0f, 600000.0f, 100000.0f, 100000.0f,
+	300000.0f, 900000.0f, 1100000.0f, 1000000.0f, 500000.0f,
+};
+static f32 lbl_8040F340[] = {
+	700000.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
 };
 
 //.sbss
@@ -28,7 +30,7 @@ DispEntry** pSortWork;
 DispEntry* pDispWork;
 
 //local prototypes
-s32 _sort(const void** sortA, const void** sortB);
+static s32 _sort(const void** sortA, const void** sortB);
 
 void dispInit(void) {
 	pDispWork = __memAlloc(HEAP_DEFAULT, sizeof(DispEntry) * DISP_MAX_ENTRIES);
@@ -67,7 +69,7 @@ void dispEntry(CameraId camId, s32 renderMode, DispCallback callback, void* para
 	entry_n++;
 }
 
-s32 _sort(const void** sortA, const void** sortB) {
+static s32 _sort(const void** sortA, const void** sortB) {
 	f32 temp_f0;
 	f32 temp_f1;
 

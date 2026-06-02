@@ -212,7 +212,7 @@ char* pouchGetYoshiName(void) {
 		return mpp->yoshiName;
 	}
 	else {
-		return NULL; // return msgSearch("name_party3");
+		return (char*)msgSearch("name_party3");
 	}
 }
 
@@ -379,7 +379,7 @@ BOOL pouchEquipBadgeIndex(s32 index) {
 	return TRUE;
 }
 
-u16 pouchGetStarPoint(void) {
+s16 pouchGetStarPoint(void) {
 	return mpp->mStarPoints;
 }
 

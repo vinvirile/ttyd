@@ -1,7 +1,7 @@
 #pragma once
 
 #include <dolphin/types.h>
-#include "texPalette.h"
+#include "sdk/texPalette.h"
 
 typedef struct eff_n64_work {
 	TEXPalette* effTexture; //0x0

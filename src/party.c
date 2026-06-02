@@ -16,6 +16,14 @@ PartyEntry* anotherPartyGetPtr(s32 id) {
 	return *(partyPtrTbl + ((id + 1) & 1));
 }
 
+void partyInitCamId(PartyEntry* entry) {
+	entry->camId = marioGetCamId();
+}
+
+void partySetCamId(PartyEntry* entry, s32 camId) {
+	entry->camId = camId;
+}
+
 /*
 //.data
 typedef struct PartyData {
