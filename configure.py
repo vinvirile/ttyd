@@ -764,7 +764,7 @@ config.libs = [
         "cflags": cflags_static,
         "progress_category": "game",
         "objects": [
-            Object(NonMatching, "sequence/seq_game.c"),
+            Object(Matching, "sequence/seq_game.c"),
             Object(NonMatching, "sequence/seq_mapchange.c"),
             Object(NonMatching, "sequence/seq_title.c"),
             Object(NonMatching, "sequence/seq_battle.c"),
