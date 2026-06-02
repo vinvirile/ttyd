@@ -634,3 +634,34 @@ Do not commit changes that break the build. Always verify `ninja` succeeds after
   - `MarioSt/sequence/seq_gameover` (1128B code, 1640B data) - game over state machine
 - All require recovering complex data tables. Not quick wins.
 
+### Quick flip wins (2026-06-02)
+- **`sequence/seq_game.c`** (FLIPPED to Matching, 484B/3 fns, 100% fuzzy): Decompiled in commit `237b800`. The 3 functions (seq_gameExit 14B, seq_gameInit 198B, seq_gameMain 412B) match exactly. **Depends on `seq_data` from `seqdef.c`** but linker handles that.
+
+- **`effect/eff_ripple.c`** (FLIPPED to Matching, 204B/4 fns, 100% fuzzy): All 4 functions at 100% (effRippleSetPosition, effRippleEntry, effRippleSetCamId, effRippleSetRxRz). Flipped in commit `e560595`. The `.sdata2` 24B is gone but linker can place the data correctly without matching bytes.
+
+### `evt_snd.c` attempt (FAILED - data section blocker)
+- Investigated flipping `evt_snd.c` (3 fns, 196B code, 2 at 100%, 1 at 96% fuzzy). The 1-instruction diff is:
+  - Target: `clrlwi r0, r0, 17` (bytes `54 00 04 7E`) for `u16 & 0xFFFE` on a u16 field
+  - Mine: `rlwinm r0, r0, 0, 0, 30` (bytes `54 00 04 3C`) — different mask encoding for same effective op
+  - Both produce u16 value 0 stored via `sthx` (since `0xFFFE & low_16 = 0x0000` if upper bit cleared, same as `0xFFF0` & value)
+  - This is a compiler optimization choice — no source-level way to force the original `clrlwi` encoding
+- Tried mask values `0xFFF0`, `0xFFFE`, `(u16)` casts — all produce same 5-byte block, none match the target encoding
+- **Unfixable from C source**
+
+### `evt_bg.c` (Partially fixed - data section blocker)
+- Was at 94.62% fuzzy, 4 functions (evt_bg_set_scrl_offset 80%, evt_bg_set_color 99.69%, evt_bg_auto_scroll_onoff 99.06%, evt_bg_disp_onoff 99.69%)
+- **MAJOR FIX for `evt_bg_set_scrl_offset`**: hoisted `event->args` to local `s32* args`. Now matches target exactly (was using 1 callee-saved register, target uses 2: r30 for event, r31 for event->args).
+- **MAJOR FIX for `evt_bg_set_color`**: 
+  - `volatile GXColor unk_80422fe8;` + `(void)unk_80422fe8;` keeps the static alive
+  - Original `GXColor color = unk_80422fe8;` was optimized away, causing data loss
+  - The `volatile` forces the read; the order in source is preserved by the compiler
+- **Section issue**: my code puts the static in `.sbss` (size 4B), target has it in `.sbss2` (size 8B with 4B `gap_10_80422FEC_sbss2` for alignment)
+- **Tried**: `volatile GXColor` + extra `volatile u32 gap_10_80422fec` static → my code now emits 8B but in `.sbss` (not `.sbss2`)
+- **Cannot force `.sbss2` from C source** — the compiler decides based on SDA21 access pattern, and my `volatile` variables don't trigger it
+- **Cannot flip to Matching** — section name difference changes `.strtab`/`.symtab` content, affecting SHA1
+
+### Build status after this session
+- **Total units**: 1239, **Matching**: 109 (8.8%) — up from 107
+- **Total functions**: 9770, **Matched**: 1778 (18.2%)
+- **DOL hash**: `cf559d97fef1b3efb8788126250aee88f0491410` (matches expected)
+
