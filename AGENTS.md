@@ -607,3 +607,30 @@ Do not commit changes that break the build. Always verify `ninja` succeeds after
 - **Stale .o build cache**: When source order is changed, ninja may use a cached .o. **MUST** `Remove-Item build/G8MJ01/src/event/evt_seq.o -Force` to force rebuild. Otherwise objdiff shows 100% match but link fails.
 - `MarioSt.dol` SHA1: `cf559d97fef1b3efb8788126250aee88f0491410` (matches).
 
+**`motion/mot_yoshi.c`** (NOT flipped - 84.3% fuzzy, 32/32 data match, 2/2 fns):
+- Decompiled `mot_yoshi` (140B) and `mot_yoshi_post` (188B). Both at 100% instruction-level when checked against actual .o bytes via dtk disasm.
+- **`mot_yoshi`**: clears `flags &= ~0xF000` (bits 12-15), ORs `dispFlags |= 0x4 | 0x1000`, zeros various fields.
+- **`mot_yoshi_post`**: if `unk168 != -1` call `psndSFXOff` then set to -1; clear bits 29/19 of dispFlags; store 6 floats from vec3_802f32e0 and vec3_802f32ec to mario+0x98..0xAC using `stw` (s32 cast).
+- **objdiff-cli BUG CONFIRMED**: objdiff shows `lbz`/`stb`/`li r0, 0xff` and rlwinm masks MB=3,ME=1 for `mot_yoshi_post` target, but actual .o file bytes (verified via dtk disasm and direct byte check) are `lwz`/`stw`/`li r0, -0x1` and rlwinm masks MB=30,ME=28 (clears bit 29 = 0x20000000) and MB=20,ME=18 (clears bit 19 = 0x00080000). The bytes are correct; only objdiff's display is wrong.
+- **Function order**: target has `mot_yoshi_post` at 0x0, `mot_yoshi` at 0xBC. With `-inline deferred` reversal, source must be `mot_yoshi` first, `mot_yoshi_post` second.
+- **`static f32 = 0.0f` forced to .sbss; `static const f32 = 0.0f` forced to .sdata2**. Original puts `float_0_8041c8d8` in .sdata2 (4B) + 4B gap_09 = 8B total. Mine emits 4B .sdata2 only. Gap can't be forced from C source.
+- **Data section SHA1 blocker**: my .sdata2 = 4B, target = 8B (gap_09). Even with 100% code match, can't pass SHA1.
+
+### Updated Build Status (after mot_yoshi.c commit)
+- **Total units**: 1239, **Matching**: 107 (8.6%) — up from 106
+- **Game Code Matching**: 14/416
+- **Total functions**: 9770, **Matched**: 1778 (18.2%)
+- **Fuzzy match**: 14.20%
+- **DOL hash**: `cf559d97fef1b3efb8788126250aee88f0491410` (matches expected)
+
+### Small DOL units investigation (2026-06-02)
+- Searched for small untouched DOL units. Most are pre-compiled static libraries without source:
+  - `MarioSt/TRK_MINNOW_DOLPHIN.a/*` (debugger code, Metrowerks-specific)
+  - `MarioSt/MSL_C.PPCEABI.bare.H.a/*` (math/rand functions from Metrowerks Standard Library)
+  - `MarioSt/Runtime.PPCEABI.H.a/*` (C++ runtime support)
+- Touchable DOL units with small code are rare. The smallest candidates are:
+  - `MarioSt/unit/unit_object_switch` (232B code, 600B data) - battle unit data table
+  - `MarioSt/effect/eff_number` (2004B code, 80B data) - single function, complex (number rendering)
+  - `MarioSt/sequence/seq_gameover` (1128B code, 1640B data) - game over state machine
+- All require recovering complex data tables. Not quick wins.
+
