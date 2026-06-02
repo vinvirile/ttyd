@@ -592,9 +592,18 @@ Do not commit changes that break the build. Always verify `ninja` succeeds after
 - **Conclusion**: Cannot reach 100% without knowing the original source's exact pattern. The 4B .sdata2 size difference is a hard blocker for SHA1 even with 100% code match. Left as NonMatching.
 
 ### Current Build Status
-- **Total units**: 1239, **Matching**: 105 (8.5%) — up from 105
-- **Game Code Matching**: 13/416 (unchanged this round)
-- **Total functions**: 9770, **Matched**: 1773 (18.1%)
-- **Fuzzy match**: 14.16% — up from 13.33% (eff_confetti data section improved)
+- **Total units**: 1239, **Matching**: 106 (8.5%) — up from 105
+- **Game Code Matching**: 14/416
+- **Total functions**: 9770, **Matched**: 1775 (18.2%)
+- **Fuzzy match**: 14.16%
 - **DOL hash**: `cf559d97fef1b3efb8788126250aee88f0491410` (matches expected)
+
+**`event/evt_seq.c`** (FLIPPED TO MATCHING - 204/204B, 2/2 functions, 100%):
+- Decompiled `evt_seq_wait` (80B) and `evt_seq_set_seq` (124B). Both at 100% instruction match.
+- **`USER_FUNC(evt_seq_wait)`**: gets `val` from args[0], calls `seqGetSeq()`, returns 2 if equal else 0.
+- **CRITICAL PATTERN**: For `(cur-val) | (val-cur)` to emit `or r3, r4, r0` (not `or r4, r4, r0`), the C must use **sign check** not non-zero check: `return diff < 0 ? 0 : 2;` where `diff = (cur-val) | (val-cur)`. The `or r3, r4, r0` uses r3 (return register) as dest; with `!= 0` check, compiler emits `or r4` then `neg+or` (non-zero check pattern).
+- **`USER_FUNC(evt_seq_set_seq)`**: takes 3 args via `evtGetValue`, calls `seqSetSeq(seq, (char*)map, (char*)bero)`, returns 0.
+- **CRITICAL FIX**: Function order was wrong initially. Original binary has `evt_seq_wait` at 0x0 and `evt_seq_set_seq` at 0x50. With `-inline deferred` reversal, source must be `set_seq` first, `wait` second. objdiff-cli's symbol order in JSON is alphabetical, NOT address-based (false positive when verifying order from JSON).
+- **Stale .o build cache**: When source order is changed, ninja may use a cached .o. **MUST** `Remove-Item build/G8MJ01/src/event/evt_seq.o -Force` to force rebuild. Otherwise objdiff shows 100% match but link fails.
+- `MarioSt.dol` SHA1: `cf559d97fef1b3efb8788126250aee88f0491410` (matches).
 
