@@ -665,3 +665,31 @@ Do not commit changes that break the build. Always verify `ninja` succeeds after
 - **Total functions**: 9770, **Matched**: 1778 (18.2%)
 - **DOL hash**: `cf559d97fef1b3efb8788126250aee88f0491410` (matches expected)
 
+### Mass MusyX flip session (2026-06-02)
+- **7 MusyX files flipped to Matching** in commits `9498594` and `56c350f`:
+  - `musyx/runtime/synth_ac.c` (288B, 2 fns, 100% fuzzy, .data 1024B + .sdata2 24B)
+  - `musyx/runtime/synth_adsr.c` (1984B, 7 fns, 100% fuzzy, .sdata2 40B)
+  - `musyx/runtime/snd_init.c` (320B, 2 fns, 100% fuzzy, no data sections)
+  - `musyx/runtime/snd_math.c` (960B, 4 fns, 100% fuzzy, .sdata2 32B)
+  - `musyx/runtime/hw_volconv.c` (1776B, 1 fn, 100% fuzzy, .data 552B + .sbss 32B + .rodata 24B)
+  - `musyx/runtime/CheapReverb/creverb_fx.c` (60B, 1 fn, 100% fuzzy, no data sections)
+  - `musyx/runtime/StdReverb/reverb_fx.c` (156B, 2 fns, 100% fuzzy, no data sections)
+  - `musyx/runtime/Delay/delay_fx.c` (580B, 3 fns, 100% fuzzy, no data sections)
+  - `musyx/runtime/Chorus/chorus_fx.c` (2112B, 4 fns, 100% fuzzy, .data 2048B + .sbss 8B)
+  - `musyx/runtime/CheapReverb/creverb.c` (1064B, 1 fn, 100% fuzzy, .data 64B)
+- **Total MusyX linked**: 15/18 files (up from 5/18)
+- **Total DOL units matching**: 119 (up from 109)
+- **Key insight**: MusyX files at 100% fuzzy often have data sections that just need to be defined in source — the linker will accept them even if the bytes don't match exactly.
+
+### Failed MusyX flip attempts
+- `musyx/runtime/synthmacros.c` (20200B, 51 fns, 100% fuzzy, .sdata2 40B with 71% match): .sdata2 has 8B gap_09 that can't be filled from C source — SHA1 mismatch
+- `musyx/runtime/snd_service.c` (724B, 3 fns, 100% fuzzy, data 2128B): data sections cause SHA1 mismatch
+- `musyx/runtime/synthvoice.c` (74.5% fuzzy): 8 of 23 functions not decompiled (undefined symbols: `synthKillVoicesBySampleReferences`, `voiceAllocatePeek`, `vidGetPublicId`)
+- `musyx/runtime/synthdata.c` (7404B, 26 fns, 0% fuzzy): not decompiled yet
+
+### Other failed flip attempts
+- `manager/dvdmgr.c` (1516B, 98% fuzzy): undefined symbol `DVDRead` (missing SDK include/declaration)
+- `driver/dispdrv.c` (1136B, 100% fuzzy): .data + .sdata + .sbss + .sdata2 = too many data sections, SHA1 mismatch
+- `driver/seqdrv.c` (348B, 100% fuzzy): depends on `seq_data` from `seqdef.c` (NonMatching)
+- `event/evt_offscreen.c` (668B, 96.6% fuzzy, no data sections): ELF symbol visibility mismatch — target uses `visibility:hidden` (0x8), mine is default (0x0). Code bytes match but .strtab differs. Can't be controlled from C source.
+
