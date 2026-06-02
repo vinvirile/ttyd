@@ -20,10 +20,6 @@ void partyInitCamId(PartyEntry* entry) {
 	entry->camId = marioGetCamId();
 }
 
-void partySetCamId(PartyEntry* entry, s32 camId) {
-	entry->camId = camId;
-}
-
 /*
 //.data
 typedef struct PartyData {
