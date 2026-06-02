@@ -2,6 +2,6 @@
 
 #include <dolphin/types.h>
 
-extern void effConfettiN64Entry(f32 param);
+extern void effConfettiN64Entry(f32 a);
 
 void effConfettiEntry(void);

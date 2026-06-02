@@ -582,18 +582,19 @@ Do not commit changes that break the build. Always verify `ninja` succeeds after
 - **External funcs** declared in evt_snd.c: `L_camDispOn`, `L_psndBGM_stop`, `N_pouchUnEquipBadgeID`, `psndSetReverb`.
 - Can't flip to Matching because the 1-instruction `rlwinm` encoding diff causes SHA1 mismatch.
 
-**`effect/eff_confetti.c`** (88.9% fuzzy, NOT flipped - 2 unfixable diffs):
-- Single function `effConfettiEntry` (36B) loads 1.0f into f4 and calls `effConfettiN64Entry`.
-- **Unfixable diff #1: register choice (f1 vs f4)**: To get 1.0f in f4, the prototype must have 3+ prior float args. With `(f32, f32, f32, f32)` prototype and `effConfettiN64Entry(0.0f, 0.0f, 0.0f, 1.0f)`, my compiler emits 12 instructions (48B) — too big. The original emits 9 instructions (36B). The original compiler OMITTED the explicit 0.0f loads for f1, f2, f3 — possibly because the function doesn't actually use them, or the source uses a non-standard calling pattern.
-- **Unfixable diff #2: .sdata2 size/order (4B vs 8B)**: Original has `float_1_8041c730` (4B) + `gap_09_8041C734_sdata2` (4B of 0). My compiler emits only `float_1` (4B total) — the gap is uninitializable from C source. The compiler optimizes out unused `static const f32 float_0 = 0.0f;` declarations. Even `volatile const` is optimized out. Without interprocedural optimization (knowing the function doesn't read the gap), the gap can't be forced.
-- **Tried prototypes**: `(f32)` 88.9%, `(f32, f32, f32, f32)` 66.7%, `(s32, s32, f32, f32, f32, f32)` 57.1%, K&R `()` 88.9%.
-- **Tried data tricks**: explicit `static const f32 float_0 = 0.0f`, `volatile const`, array `[1] = {0}`, using both constants in a 6-arg call.
-- **Conclusion**: Cannot reach 100% without knowing the original source's exact pattern. Left as NonMatching.
+**`effect/eff_confetti.c`** (99.4% fuzzy, NOT flipped - 2 unfixable diffs):
+- Single function `effConfettiEntry` (36B) loads 1.0f and calls `effConfettiN64Entry`.
+- **Current state**: Function 36B matches size, .sdata2 8/8 bytes match. Only diff is `lfs f1` (mine) vs `lfs f4` (original).
+- **Unfixable diff #1: register choice (f1 vs f4)**: To get 1.0f in f4, the prototype must have 3+ prior float args. With `(f32, f32, f32, f32)` prototype and 4-arg call, my compiler emits 12 instructions (48B) — too big. The original emits 9 instructions (36B). The original compiler OMITTED the explicit 0.0f loads for f1, f2, f3 — possibly because the function doesn't actually use them, or the source uses a non-standard calling pattern.
+- **Unfixable diff #2: .sdata2 size (4B vs 8B)**: Original has `float_1_8041c730` (4B) + `gap_09_8041C734_sdata2` (4B of 0). My compiler emits only `float_1` (4B total) — the gap is uninitializable from C source. The compiler optimizes out unused `static const f32 float_0 = 0.0f;` declarations. Even `volatile const` is optimized out. Without interprocedural optimization (knowing the function doesn't read the gap), the gap can't be forced.
+- **Tried prototypes**: `(f32)` 99.4% (size match, f1 vs f4), `(f32, f32, f32, f32)` 66.7% (size mismatch), `(s32, s32, s32, f32)` 66.1% (size mismatch), K&R `()` 88.9% (lfd instead of lfs).
+- **Tried data tricks**: explicit `static const f32 float_0 = 0.0f`, `volatile const`, array `[1] = {0}`, using both constants in a 6-arg call, `(void)gap_09` cast.
+- **Conclusion**: Cannot reach 100% without knowing the original source's exact pattern. The 4B .sdata2 size difference is a hard blocker for SHA1 even with 100% code match. Left as NonMatching.
 
 ### Current Build Status
-- **Total units**: 633, **Matching**: 140 (22.1%) — up from 138
-- **Game Code Matching**: 13/416 (up from 11)
-- **Total functions**: 7063, **Matched**: 1782 (25.2%) — up from 1772
-- **Total units (all)**: 107/1239 matched, 7.52% linked
+- **Total units**: 1239, **Matching**: 105 (8.5%) — up from 105
+- **Game Code Matching**: 13/416 (unchanged this round)
+- **Total functions**: 9770, **Matched**: 1773 (18.1%)
+- **Fuzzy match**: 14.16% — up from 13.33% (eff_confetti data section improved)
 - **DOL hash**: `cf559d97fef1b3efb8788126250aee88f0491410` (matches expected)
 
