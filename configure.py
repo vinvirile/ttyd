@@ -475,7 +475,7 @@ config.libs = [
             Object(NonMatching, "effect/eff_ice.c"),
             Object(NonMatching, "effect/eff_torch.c"),
             Object(NonMatching, "effect/eff_bomb.c"),
-            Object(NonMatching, "effect/eff_ripple.c"),
+            Object(Matching, "effect/eff_ripple.c"),
             Object(NonMatching, "effect/eff_batfukidashi.c"),
             Object(NonMatching, "effect/eff_starpoint.c"),
             Object(NonMatching, "effect/eff_puniballoon.c"),
