@@ -21,6 +21,7 @@ orig/*/*
 build/
 .ninja_*
 build.ninja
+*.d
 
 # decompctx output
 ctx.*
@@ -33,6 +34,9 @@ compile_commands.json
 # Miscellaneous
 /*.txt
 *.exe
+
+# Temp/scratch files
+tmp_*
 
 # Files for in-development testing
 data/*
