@@ -656,7 +656,7 @@ config.libs = [
             Object(Matching, "event/evt_paper.c"),
             Object(Matching, "event/evt_seq.c"),
             Object(NonMatching, "event/evt_bg.c"),
-            Object(NonMatching, "event/evt_case.c"),
+            Object(Matching, "event/evt_case.c"),
             Object(NonMatching, "event/evt_light.c"),
             Object(NonMatching, "event/evt_img.c"),
             Object(NonMatching, "event/evt_offscreen.c"),
