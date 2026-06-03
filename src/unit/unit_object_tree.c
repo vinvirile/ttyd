@@ -126,7 +126,7 @@ USER_FUNC(_rumble_tree) {
         obj->mPosition.y += delta;
         event->userdata[0]++;
     }
-    if (event->userdata[0] >= 0x22) {
+    if ((u32)event->userdata[0] >= 0x22) {
         return EVT_RETURN_DONE;
     }
     return 0;

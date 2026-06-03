@@ -24,9 +24,9 @@ s32 evt_run_case_evt(EventEntry* event) {
     setup.hitObjName = (const char*)v2;
     setup.swFlag = v3;
     setup.activeFunc = NULL;
-    memcpy(setup.lwData, event->lwData, 0x40);
     setup.evtCode = (void*)v4;
     setup.priority = 0;
+    memcpy(setup.lwData, event->lwData, 0x40);
     v4 = caseEntry(&setup);
     if (args[4] != 0) {
         evtSetValue(event, args[4], v4);
@@ -52,9 +52,9 @@ s32 evt_run_case_evt_bero(EventEntry* event) {
     setup.hitObjName = (const char*)v2;
     setup.swFlag = v3;
     setup.activeFunc = NULL;
-    memcpy(setup.lwData, event->lwData, 0x40);
     setup.evtCode = (void*)v4;
     setup.priority = 0x14;
+    memcpy(setup.lwData, event->lwData, 0x40);
     v4 = caseEntry(&setup);
     if (args[4] != 0) {
         evtSetValue(event, args[4], v4);
@@ -62,24 +62,24 @@ s32 evt_run_case_evt_bero(EventEntry* event) {
     return EVT_RETURN_DONE;
 }
 
-s32 evtRunCaseEntry(u16 activeConditionId, s32 inBattle, const char* hitObjName,
-                    u32 swFlag, void* evtCode, void* setupData) {
+s32 evtRunCaseEntry(s32 activeConditionId, s32 inBattle, const char* hitObjName,
+                    s32 swFlag, void* evtCode, void* setupData) {
     CaseSetup setup;
 
     if (inBattle != 0) {
         activeConditionId |= 0x8000;
     }
-    setup.activeConditionId = activeConditionId;
+    setup.activeConditionId = (u16)activeConditionId;
     setup.hitObjName = hitObjName;
     setup.swFlag = swFlag;
     setup.activeFunc = NULL;
+    setup.evtCode = evtCode;
+    setup.priority = 0;
     if (setupData != NULL) {
         memcpy(setup.lwData, setupData, 0x40);
     } else {
         memset(setup.lwData, 0, 0x40);
     }
-    setup.evtCode = evtCode;
-    setup.priority = 0;
     return caseEntry(&setup);
 }
 
