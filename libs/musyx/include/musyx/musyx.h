@@ -156,7 +156,8 @@ bool sndPopGroup(void);
 void sndSetSampleDataUploadCallback(void* (*callback)(u32 offset, u32 bytes), u32 chunkSize);
 
 typedef struct SND_HOOKS {
-  void* (*malloc)(size_t addr);
+  void* (*malloc)(size_t len);
+  void* (*mallocPhys)(u32 len, struct SND_HOOKS* hooks);
   void (*free)(void* addr);
 } SND_HOOKS;
 

@@ -42,7 +42,7 @@ void sndFree(void* ptr) {
 }
 
 void SoundInit(void) { // 1:1, assuming sndMalloc inlines
-    SND_HOOKS hooks = (SND_HOOKS){ sndMalloc, sndFree };
+    SND_HOOKS hooks = (SND_HOOKS){ sndMalloc, NULL, sndFree };
     void* data;
     SoundStream* streams;
     SoundSong* songs;

@@ -920,6 +920,7 @@ config.libs = [
             Object(Matching, "musyx/runtime/StdReverb/reverb_fx.c"),
             Object(Matching, "musyx/runtime/Delay/delay_fx.c"),
             Object(Matching, "musyx/runtime/Chorus/chorus_fx.c"),
+            Object(Matching, "musyx/runtime/hw_memory.c"),
         ],
     },
     DolphinLib(
