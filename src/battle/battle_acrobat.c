@@ -78,13 +78,12 @@ s32 BattleAcrobatMain(BattleWork* work) {
 
 //param = BattleWorkUnit* unit;
 void accrobat_timing_icon_disp(CameraId camId, void* param) {
-	BattleWorkUnit* unit = param; //cast to proper type
-	f32 x, y, z; //sp 8, c, 10
-
-	BtlUnit_GetPos(unit, &x, &y, &z);
-	x += 15.0f;
-	y += (f32)(BtlUnit_GetHeight(unit) + 5);
-	//iconDispGx();
+	BattleWorkUnit* unit = (BattleWorkUnit*)param;
+	Vec pos;
+	BtlUnit_GetPos(unit, &pos.x, &pos.y, &pos.z);
+	pos.x += 15.0f;
+	pos.y += (f32)(BtlUnit_GetHeight(unit) + 5);
+	iconDispGx(pos, 0, 0x9A, 0.67f);
 }
 
 s32 BattleAcrobatGetResult(BattleWork* work, s32* result, s32* curFrame) {

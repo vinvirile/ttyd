@@ -620,7 +620,7 @@ void BtlUnit_SetPartsBaseScale(BattleWorkUnitPart* part, f32 x, f32 y, f32 z);
 void BtlUnit_SetPartsScale(BattleWorkUnitPart* part, f32 x, f32 y, f32 z);
 void BtlUnit_AddPartsScale(BattleWorkUnitPart* part, f32 x, f32 y, f32 z);
 s16 BtlUnit_GetWidth(BattleWorkUnit* unit);
-s16 BtlUnit_GetHeight(BattleWorkUnit* unit);
+s32 BtlUnit_GetHeight(BattleWorkUnit* unit);
 void BtlUnit_SetHeight(BattleWorkUnit* unit, s16 height);
 void BtlUnit_SetOffsetPos(BattleWorkUnit* unit, f32 x, f32 y, f32 z);
 void BtlUnit_GetPartsOffsetPos(BattleWorkUnitPart* part, f32* x, f32* y, f32* z);
