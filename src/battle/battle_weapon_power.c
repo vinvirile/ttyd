@@ -24,7 +24,7 @@ s32 weaponGetPowerFromMarioJumpLv(BattleWorkUnit* unit, s32* table) {
     s32 extra;
     if (idx >= 6) idx = 5;
     extra = *(u8*)((char*)unit + 0x2FB);
-    i = *(s32*)((char*)table + idx * 4 + 0x20);
+    i = ((s32*)((char*)table + 0x20))[idx];
     if (extra != 0) i += extra;
     return i;
 }
@@ -37,20 +37,20 @@ s32 weaponGetPowerFromMarioHammerLv(BattleWorkUnit* unit, s32* table) {
     s32 extra;
     if (idx >= 6) idx = 5;
     extra = *(u8*)((char*)unit + 0x2FC);
-    i = *(s32*)((char*)table + idx * 4 + 0x20);
+    i = ((s32*)((char*)table + 0x20))[idx];
     if (extra != 0) i += extra;
     return i;
 }
 #pragma dont_inline off
 
 s32 weaponGetPowerOverlapJump1(BattleWorkUnit* unit, s32* table) {
-    s32 mult = *(s32*)((char*)table + 0x3C);
+    s32 mult = table[0x3C / 4];
     s32 badge = pouchEquipCheckBadge(*(s32*)((char*)table + 0x38));
     return weaponGetPowerFromMarioJumpLv(unit, table) + mult * badge;
 }
 
 s32 weaponGetPowerOverlapHammer1(BattleWorkUnit* unit, s32* table) {
-    s32 mult = *(s32*)((char*)table + 0x3C);
+    s32 mult = table[0x3C / 4];
     s32 badge = pouchEquipCheckBadge(*(s32*)((char*)table + 0x38));
     return weaponGetPowerFromMarioHammerLv(unit, table) + mult * badge;
 }
@@ -111,9 +111,9 @@ s32 weaponGetPowerTatsumaki(s32 unused, s32* table) {
     s32 base;
     s32 badge;
     s32 mult;
-    base = *(s32*)((char*)table + 0x20);
     BattleGetMarioPtr(_battleWorkPointer);
+    base = table[0x20 / 4];
     badge = pouchEquipCheckBadge(0xF3);
-    mult = *(s32*)((char*)table + 0x24);
+    mult = table[0x24 / 4];
     return base + mult * badge;
 }
