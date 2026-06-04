@@ -489,7 +489,7 @@ f32 pouchGetAudienceNum(void);
 void pouchSetAudienceNum(f32 num);
 s32 pouchGetJumpLv(void);
 s32 pouchGetHammerLv(void);
-s16 pouchGetPartyAttackLv(MarioPartner partnerId);
+s32 pouchGetPartyAttackLv(MarioPartner partnerId);
 BOOL pouchAddKeepItem(s16 id);
 BOOL pouchRemoveKeepItem(s32 id, s32 index);
 void pouchReviseMarioParam(void);

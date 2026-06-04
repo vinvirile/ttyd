@@ -463,7 +463,7 @@ BOOL pouchAddKeepItem(s16 id) {
 	return FALSE;
 }
 
-s16 pouchGetPartyAttackLv(MarioPartner partnerId) {
+s32 pouchGetPartyAttackLv(MarioPartner partnerId) {
 	return mpp->partyData[partnerId].attackLevel;
 }
 
