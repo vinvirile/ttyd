@@ -1160,6 +1160,18 @@ config.libs = [
             Object(NonMatching, "dou_00.c"),
         ],
     ),
+    Rel(
+        "hei",
+        [
+            Object(NonMatching, "hei_09.c"),
+        ],
+    ),
+    Rel(
+        "gra",
+        [
+            Object(NonMatching, "gra_02.c"),
+        ],
+    ),
 ]
 
 # Optional extra categories for progress tracking
