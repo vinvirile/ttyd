@@ -118,8 +118,8 @@ USER_FUNC(evt_puni_mem_init) {
 }
 
 USER_FUNC(puni_disp_info_sub) {
-    int i;
-    int v3;
+	int i;
+	int v3 = 0;
 
     for (i = 1; i < 103; i++) {
         if ((Punidat[i].unk4 & 0x400) && !(Punidat[i].unk4 & 0x804000) && !(Punidat[i].unk4 & 0x80)) {
