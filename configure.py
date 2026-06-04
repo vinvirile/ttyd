@@ -1188,6 +1188,7 @@ config.libs = [
         "jon",
         [
             Object(NonMatching, "unit/unit_borodo.c"),
+            Object(NonMatching, "unit/unit_ura_noko.c"),
         ],
     ),
     Rel(

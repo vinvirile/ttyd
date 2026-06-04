@@ -42,7 +42,7 @@ static const f32 float_1_8042232c = 1.0f;
 static const f32 float_0p125_80422330 = 0.125f;
 static const f32 float_gap_80422334 = 0.0f;  // gap_09_80422334_sdata2
 
-void effUranokoEntry(EffectEntry* effect, f32 x, f32 y, f32 z, s32 time) {
+EffectEntry* effUranokoEntry(EffectEntry* effect, f32 x, f32 y, f32 z, s32 time) {
     EffectEntry* entry;
     void* data;
     effUranokoData* d;
@@ -64,6 +64,7 @@ void effUranokoEntry(EffectEntry* effect, f32 x, f32 y, f32 z, s32 time) {
     d->poseId = -1;
     d->color = 0xFF;
     effect->flags |= 0x2;
+    return entry;
 }
 
 void effUranokoMain(EffectEntry* effect) {
