@@ -1181,6 +1181,7 @@ config.libs = [
         "gon",
         [
             Object(NonMatching, "unit/unit_honenoko.c"),
+            Object(NonMatching, "unit/unit_red_honenoko.c"),
         ],
     ),
 ]
