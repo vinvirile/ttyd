@@ -1174,6 +1174,7 @@ config.libs = [
             Object(NonMatching, "gra_04.c"),
             Object(NonMatching, "unit/unit_faker_mario_gra.c"),
             Object(NonMatching, "unit/unit_kuriboo.c"),
+            Object(NonMatching, "unit/unit_hyper_kuriboo.c"),
         ],
     ),
 ]
