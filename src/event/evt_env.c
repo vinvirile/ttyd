@@ -17,10 +17,10 @@ USER_FUNC(evt_env_blur_on) {
 
 	if (val1 != 0) {
 		u32 n = *(volatile u32*)0x800000F8;
-		u32 nowScaled = (u32)(((u64)(u32)(n >> 2) * (u64)0x10624DD3u) >> 38);
-		u64 lifetimeDiff = event->lifetime - ((u64)(u32)event->userdata[0] << 32 | (u32)event->userdata[1]);
+		u32 nowScaled = (n >> 2) / 1000;
+		u64 lifetimeDiff = ((u64)lifetimeHi << 32 | lifetimeLo) - ((u64)(u32)event->userdata[0] << 32 | (u32)event->userdata[1]);
 		u64 elapsed = lifetimeDiff / nowScaled;
-		if ((s64)elapsed < (s64)val1) {
+		if ((s64)elapsed < val1) {
 			return 0;
 		}
 		envBlurOff();
