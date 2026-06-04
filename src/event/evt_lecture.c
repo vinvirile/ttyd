@@ -9,24 +9,24 @@
 extern GlobalWork* gp;
 
 //.sbss
-s32 lect_work;
-f32 stXdir4;
-f32 stXdir3;
-f32 stXdir2;
-f32 stXdir1;
-f32 stPdir4;
-f32 stPdir3;
-f32 stPdir2;
-f32 stPdir1;
-f32 stMdir4;
-f32 stMdir3;
-f32 stMdir2;
-f32 stMdir1;
-Vec stXpos;
-Vec stPpos;
-Vec stMpos;
-Vec stAt;
 Vec stPt;
+Vec stAt;
+Vec stMpos;
+Vec stPpos;
+Vec stXpos;
+f32 stMdir1;
+f32 stMdir2;
+f32 stMdir3;
+f32 stMdir4;
+f32 stPdir1;
+f32 stPdir2;
+f32 stPdir3;
+f32 stPdir4;
+f32 stXdir1;
+f32 stXdir2;
+f32 stXdir3;
+f32 stXdir4;
+s32 lect_work;
 
 USER_FUNC(lect_juyoitem_rel_get) {
 	s32* args = event->args;
