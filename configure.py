@@ -1170,6 +1170,7 @@ config.libs = [
         "gra",
         [
             Object(NonMatching, "gra_02.c"),
+            Object(NonMatching, "gra_04.c"),
         ],
     ),
 ]
