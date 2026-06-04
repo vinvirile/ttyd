@@ -24,6 +24,7 @@ BOOL BattleCheckEndUnitInitEvent(BattleWork* wp) {
     return valid;
 }
 
+#pragma dont_inline on
 s32 BattleRunHitEventDirect(BattleWorkUnit* unit, s32 damageCode, void* code) {
     EventEntry* evt;
     s32 id, newId;
@@ -62,6 +63,7 @@ s32 BattleRunHitEventDirect(BattleWorkUnit* unit, s32 damageCode, void* code) {
     }
     return newId;
 }
+#pragma dont_inline off
 
 s32 BattleRunHitEvent(BattleWorkUnit* unit, s32 damageCode) {
     void* code;
