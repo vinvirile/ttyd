@@ -1196,6 +1196,12 @@ config.libs = [
             Object(NonMatching, "unit/unit_gullible_christine.c"),
         ],
     ),
+    Rel(
+        "hei",
+        [
+            Object(NonMatching, "unit/unit_gold_chorobon.c"),
+        ],
+    ),
 ]
 
 # Optional extra categories for progress tracking
