@@ -1154,6 +1154,12 @@ config.libs = [
             Object(NonMatching, "mri_puni.c"),
         ],
     ),
+    Rel(
+        "dou",
+        [
+            Object(NonMatching, "dou_00.c"),
+        ],
+    ),
 ]
 
 # Optional extra categories for progress tracking
