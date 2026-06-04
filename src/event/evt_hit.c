@@ -101,10 +101,12 @@ USER_FUNC(evt_hitobj_attr_onoff) {
 	return EVT_RETURN_DONE;
 }
 
+#pragma dont_inline on
 s32 name_callback_sub(const char* name, s32 callback, s32 flag) {
 	// TODO: decompile 680B function
 	return 0;
 }
+#pragma dont_inline off
 
 USER_FUNC(evt_hitobj_name_callback) {
 	s32* args = event->args;
