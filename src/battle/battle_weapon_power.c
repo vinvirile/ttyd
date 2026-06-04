@@ -65,7 +65,7 @@ s32 weaponGetPowerFromPartyAttackLv(BattleWorkUnit* unit, s32* table) {
     i = (i >> 30) & 1;
     idx = i + level * 2;
     if (idx >= 6) idx = 5;
-    return *(s32*)((char*)table + idx * 4 + 0x20);
+    return ((s32*)((char*)table + 0x20))[idx];
 }
 
 s32 weaponGetPowerFromGulliblePartyAttackLv(BattleWorkUnit* unit, s32* table) {
@@ -73,7 +73,7 @@ s32 weaponGetPowerFromGulliblePartyAttackLv(BattleWorkUnit* unit, s32* table) {
     level = BattleTransPartyId(unit->currentKind);
     level = pouchGetPartyAttackLv(level);
     if (level >= 6) level = 5;
-    return *(s32*)((char*)table + level * 4 + 0x20);
+    return ((s32*)((char*)table + 0x20))[level];
 }
 
 s32 weaponGetACOutputParam(s32 unused, s32* table) {
