@@ -7,11 +7,11 @@
 
 extern BattleWork* _battleWorkPointer;
 
-s32 weaponGetPowerDefault(s32* table) {
+s32 weaponGetPowerDefault(s32 unused, s32* table) {
     return *(s32*)((char*)table + 0x20);
 }
 
-s32 weaponGetFPPowerDefault(s32* table) {
+s32 weaponGetFPPowerDefault(s32 unused, s32* table) {
     return *(s32*)((char*)table + 0x44);
 }
 
