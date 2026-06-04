@@ -8,16 +8,16 @@
 extern BattleWork* _battleWorkPointer;
 
 s32 weaponGetPowerDefault(s32 unused, s32* table) {
-    return *(s32*)((char*)table + 0x20);
+    return table[0x20 / 4];
 }
 
 s32 weaponGetFPPowerDefault(s32 unused, s32* table) {
-    return *(s32*)((char*)table + 0x44);
+    return table[0x44 / 4];
 }
 
 #pragma dont_inline on
 s32 weaponGetPowerFromMarioJumpLv(BattleWorkUnit* unit, s32* table) {
-    s32 i = *(s32*)((char*)_battleWorkPointer + 0x1CB8);
+    s32 i = ((s32*)_battleWorkPointer)[0x1CB8 / 4];
     s32 isGullible = (i >> 30) & 1;
     s32 level = pouchGetPtr()->jumpLevel;
     s32 idx = (level - 1) * 2 + isGullible;
@@ -30,7 +30,7 @@ s32 weaponGetPowerFromMarioJumpLv(BattleWorkUnit* unit, s32* table) {
 }
 
 s32 weaponGetPowerFromMarioHammerLv(BattleWorkUnit* unit, s32* table) {
-    s32 i = *(s32*)((char*)_battleWorkPointer + 0x1CB8);
+    s32 i = ((s32*)_battleWorkPointer)[0x1CB8 / 4];
     s32 isGullible = (i >> 30) & 1;
     s32 level = pouchGetPtr()->hammerLevel;
     s32 idx = (level - 1) * 2 + isGullible;
@@ -45,13 +45,13 @@ s32 weaponGetPowerFromMarioHammerLv(BattleWorkUnit* unit, s32* table) {
 
 s32 weaponGetPowerOverlapJump1(BattleWorkUnit* unit, s32* table) {
     s32 mult = table[0x3C / 4];
-    s32 badge = pouchEquipCheckBadge(*(s32*)((char*)table + 0x38));
+    s32 badge = pouchEquipCheckBadge(table[0x38 / 4]);
     return weaponGetPowerFromMarioJumpLv(unit, table) + mult * badge;
 }
 
 s32 weaponGetPowerOverlapHammer1(BattleWorkUnit* unit, s32* table) {
     s32 mult = table[0x3C / 4];
-    s32 badge = pouchEquipCheckBadge(*(s32*)((char*)table + 0x38));
+    s32 badge = pouchEquipCheckBadge(table[0x38 / 4]);
     return weaponGetPowerFromMarioHammerLv(unit, table) + mult * badge;
 }
 
@@ -61,7 +61,7 @@ s32 weaponGetPowerFromPartyAttackLv(BattleWorkUnit* unit, s32* table) {
     s32 idx;
     i = BattleTransPartyId(unit->currentKind);
     level = pouchGetPartyAttackLv(i);
-    i = *(s32*)((char*)_battleWorkPointer + 0x1CB8);
+    i = ((s32*)_battleWorkPointer)[0x1CB8 / 4];
     i = (i >> 30) & 1;
     idx = i + level * 2;
     if (idx >= 6) idx = 5;
@@ -95,7 +95,7 @@ s32 weaponGetPowerHPHalf(s32 unused, s32 unused2, s32* table) {
 }
 
 s32 weaponGetPowerHPHalf2(s32 unused, s32 unused2, s32* table) {
-    return *(s16*)((char*)table + 0x10C) / 2;
+    return ((s16*)table)[0x10C / 2] / 2;
 }
 
 s32 weaponGetFPPowerFPHalf(s32 unused, s32 unused2, s32* table) {
