@@ -1177,6 +1177,12 @@ config.libs = [
             Object(NonMatching, "unit/unit_hyper_kuriboo.c"),
         ],
     ),
+    Rel(
+        "gon",
+        [
+            Object(NonMatching, "unit/unit_honenoko.c"),
+        ],
+    ),
 ]
 
 # Optional extra categories for progress tracking
