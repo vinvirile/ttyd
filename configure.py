@@ -654,6 +654,7 @@ config.libs = [
             Object(NonMatching, "event/evt_mobj.c"),
             Object(NonMatching, "event/evt_eff.c"),
             Object(Matching, "event/evt_paper.c"),
+            Object(NonMatching, "event/evt_pouch.c"),
             Object(Matching, "event/evt_seq.c"),
             Object(NonMatching, "event/evt_bg.c"),
             Object(Matching, "event/evt_case.c"),
