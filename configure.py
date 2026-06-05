@@ -1244,6 +1244,7 @@ config.libs = [
         "tik",
         [
             Object(NonMatching, "unit/unit_togenoko.c"),
+            Object(NonMatching, "unit/unit_boss_gesso_right_arm.c"),
         ],
     ),
     Rel(
