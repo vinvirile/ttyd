@@ -1173,6 +1173,7 @@ config.libs = [
             Object(NonMatching, "las_00.c"),
             Object(NonMatching, "las_02.c"),
             Object(NonMatching, "las_06.c"),
+            Object(NonMatching, "las_20.c"),
             Object(NonMatching, "las_26.c"),
             Object(NonMatching, "las_27.c"),
             Object(NonMatching, "las_30.c"),
@@ -1183,6 +1184,8 @@ config.libs = [
         "mri",
         [
             Object(NonMatching, "mri_puni.c"),
+            Object(NonMatching, "mri_08.c"),
+            Object(NonMatching, "mri_17.c"),
         ],
     ),
     Rel(
