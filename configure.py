@@ -1153,6 +1153,7 @@ config.libs = [
         "aji",
         [
             Object(NonMatching, "aji_16.c"),
+            Object(NonMatching, "unit/unit_gundan_zako_magician.c"),
         ],
     ),
     Rel(
@@ -1173,6 +1174,7 @@ config.libs = [
             Object(NonMatching, "las_00.c"),
             Object(NonMatching, "las_02.c"),
             Object(NonMatching, "las_06.c"),
+            Object(NonMatching, "las_13.c"),
             Object(NonMatching, "las_20.c"),
             Object(NonMatching, "las_26.c"),
             Object(NonMatching, "las_27.c"),
@@ -1199,6 +1201,7 @@ config.libs = [
         "hei",
         [
             Object(NonMatching, "hei_09.c"),
+            Object(NonMatching, "hei_01.c"),
         ],
     ),
     Rel(
