@@ -1174,6 +1174,7 @@ config.libs = [
             Object(NonMatching, "las_00.c"),
             Object(NonMatching, "las_02.c"),
             Object(NonMatching, "las_06.c"),
+            Object(NonMatching, "las_09.c"),
             Object(NonMatching, "las_13.c"),
             Object(NonMatching, "las_20.c"),
             Object(NonMatching, "las_26.c"),
