@@ -693,9 +693,9 @@ Do not commit changes that break the build. Always verify `ninja` succeeds after
 - `driver/seqdrv.c` (348B, 100% fuzzy): depends on `seq_data` from `seqdef.c` (NonMatching)
 - `event/evt_offscreen.c` (668B, 96.6% fuzzy, no data sections): ELF symbol visibility mismatch — target uses `visibility:hidden` (0x8), mine is default (0x0). Code bytes match but .strtab differs. Can't be controlled from C source.
 
-### Session 2026-06-05: 14 REL units decompiled from scratch
+### Session 2026-06-05: 22 REL units decompiled from scratch
 
-**14 new REL units added** (13 at 100% code match, 1 at 83.8%):
+**14 previous + 8 new REL units** (18 at 100% code match, 3 at 83-98%, 1 at 61%):
 
 | Unit | Function | Size | Match |
 |------|----------|------|-------|
@@ -713,6 +713,14 @@ Do not commit changes that break the build. Always verify `ninja` succeeds after
 | `jon/unit/unit_jyugem` | `togezo_copy_status` | 160B | 100% |
 | `jon/unit/unit_hyper_jyugem` | `togezo_copy_status` | 160B | 100% |
 | `jon/unit/unit_togenoko_ace` | `togenoko_getnum` | 128B | 83.8% |
+| `mri/mri_08` | `toge_enter_func00` | 124B | 100% |
+| `mri/mri_17` | `set_depthPlaneOffset` | 104B | 84.4% |
+| `las/las_20` | `get_hosi_name` | 112B | 100% |
+| `jon/unit/unit_boss_zonbaba` | `_leg_smoke_effect` | 176B | 100% |
+| `las/unit/unit_boss_bunbaba` | `_leg_smoke_effect` | 176B | 100% |
+| `hei/hei_01` | `set_dir` | 132B | 100% |
+| `aji/unit/unit_gundan_zako_magician` | `kanbu_get_id` | 184B | 98.3% |
+| `las/las_13` | `small_star` | 188B | 60.6% |
 
 **Key patterns discovered**:
 - **REL units with only `.text` can be written as C while `.rodata`/`.data` come from split**. The compiled `.o` only needs to provide the `.text` section; all other sections are taken from the target `.o`. This enables 100% code match even for data-heavy units.
@@ -721,8 +729,8 @@ Do not commit changes that break the build. Always verify `ninja` succeeds after
 - **Register coloring via hoisted locals**: Adding `BattleWork* bp = _battleWorkPointer` and `s32* args = event->args` as local variables forces the compiler to use callee-saved registers for them, producing matching code.
 
 **Build stats**:
-- Functions: 1874 (+14 since last session)
-- Code bytes: 397,696 (+1,048)
-- Fuzzy match: 16.33% (up from 16.28%)
-- Game Code functions: 855 (+12)
+- Functions: 1882 (+22 since last session)
+- Code bytes: 398,416 (+1,768)
+- Fuzzy match: 16.37% (up from 16.28%)
+- Game Code functions: 860 (+17)
 
