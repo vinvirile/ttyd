@@ -1185,6 +1185,12 @@ config.libs = [
         ],
     ),
     Rel(
+        "tou",
+        [
+            Object(NonMatching, "tou_05.c"),
+        ],
+    ),
+    Rel(
         "rsh",
         [
             Object(NonMatching, "rsh_04.c"),
