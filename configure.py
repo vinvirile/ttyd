@@ -1185,6 +1185,12 @@ config.libs = [
         ],
     ),
     Rel(
+        "rsh",
+        [
+            Object(NonMatching, "rsh_04.c"),
+        ],
+    ),
+    Rel(
         "mri",
         [
             Object(NonMatching, "mri_puni.c"),
@@ -1235,9 +1241,9 @@ config.libs = [
         ],
     ),
     Rel(
-        "jin",
+        "tik",
         [
-            Object(NonMatching, "unit/unit_gullible_christine.c"),
+            Object(NonMatching, "unit/unit_togenoko.c"),
         ],
     ),
     Rel(
