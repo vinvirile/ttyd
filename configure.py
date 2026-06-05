@@ -1178,6 +1178,7 @@ config.libs = [
             Object(NonMatching, "las_27.c"),
             Object(NonMatching, "las_30.c"),
             Object(NonMatching, "unit/unit_black_karon.c"),
+            Object(NonMatching, "unit/unit_boss_bunbaba.c"),
         ],
     ),
     Rel(
@@ -1226,6 +1227,7 @@ config.libs = [
             Object(NonMatching, "unit/unit_jyugem.c"),
             Object(NonMatching, "unit/unit_hyper_jyugem.c"),
             Object(NonMatching, "unit/unit_togenoko_ace.c"),
+            Object(NonMatching, "unit/unit_boss_zonbaba.c"),
         ],
     ),
     Rel(
