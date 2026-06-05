@@ -1220,6 +1220,9 @@ config.libs = [
             Object(NonMatching, "unit/unit_borodo.c"),
             Object(NonMatching, "unit/unit_ura_noko.c"),
             Object(NonMatching, "unit/unit_karon.c"),
+            Object(NonMatching, "unit/unit_jyugem.c"),
+            Object(NonMatching, "unit/unit_hyper_jyugem.c"),
+            Object(NonMatching, "unit/unit_togenoko_ace.c"),
         ],
     ),
     Rel(
