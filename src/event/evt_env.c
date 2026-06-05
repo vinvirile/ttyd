@@ -5,26 +5,26 @@
 USER_FUNC(evt_env_blur_on) {
 	s32* args = event->args;
 	s32 val0 = evtGetValue(event, args[0]);
-	u32 lifetimeHi = (u32)(event->lifetime >> 32);
-	u32 lifetimeLo = (u32)event->lifetime;
 	s32 val1 = evtGetValue(event, args[1]);
+	u64 lifetime = event->lifetime;
 
 	if (isFirstCall) {
 		envBlurOn(val0, val1);
-		event->userdata[0] = (s32)lifetimeHi;
-		event->userdata[1] = (s32)lifetimeLo;
+		*(s32*)((char*)event + 0x78) = (s32)((lifetime >> 32) & 0xFFFFFFFFu);
+		*(s32*)((char*)event + 0x7C) = (s32)(lifetime & 0xFFFFFFFFu);
 	}
 
-	if (val1 != 0) {
+	if (val1 == 0) goto done;
+	{
 		u32 n = *(volatile u32*)0x800000F8;
 		u32 nowScaled = (n >> 2) / 1000;
-		u64 lifetimeDiff = ((u64)lifetimeHi << 32 | lifetimeLo) - ((u64)(u32)event->userdata[0] << 32 | (u32)event->userdata[1]);
+		u64 lifetimeDiff = lifetime - (((u64)(u32)event->userdata[0] << 32) | (u32)event->userdata[1]);
 		u64 elapsed = lifetimeDiff / nowScaled;
-		if ((s64)elapsed < val1) {
-			return 0;
+		if (elapsed >= (u64)val1) {
+			envBlurOff();
+			return EVT_RETURN_DONE;
 		}
-		envBlurOff();
-		return EVT_RETURN_DONE;
 	}
+done:
 	return 0;
 }
