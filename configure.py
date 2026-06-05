@@ -1152,6 +1152,7 @@ config.libs = [
     Rel(
         "aji",
         [
+            Object(NonMatching, "aji_07.c"),
             Object(NonMatching, "aji_16.c"),
             Object(NonMatching, "unit/unit_gundan_zako_magician.c"),
         ],
@@ -1199,9 +1200,16 @@ config.libs = [
     Rel(
         "mri",
         [
+            Object(NonMatching, "mri_04.c"),
             Object(NonMatching, "mri_puni.c"),
             Object(NonMatching, "mri_08.c"),
             Object(NonMatching, "mri_17.c"),
+        ],
+    ),
+    Rel(
+        "muj",
+        [
+            Object(NonMatching, "muj_04.c"),
         ],
     ),
     Rel(
@@ -1230,6 +1238,7 @@ config.libs = [
     Rel(
         "gon",
         [
+            Object(NonMatching, "gon_12.c"),
             Object(NonMatching, "unit/unit_honenoko.c"),
             Object(NonMatching, "unit/unit_red_honenoko.c"),
         ],
