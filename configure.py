@@ -1156,6 +1156,12 @@ config.libs = [
         ],
     ),
     Rel(
+        "bom",
+        [
+            Object(NonMatching, "data/battle/battle_database_bom.c"),
+        ],
+    ),
+    Rel(
         "kpa",
         [
             Object(NonMatching, "kpa_05.c"),
