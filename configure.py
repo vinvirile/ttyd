@@ -1150,6 +1150,24 @@ config.libs = [
         ],
     ),
     Rel(
+        "aji",
+        [
+            Object(NonMatching, "aji_16.c"),
+        ],
+    ),
+    Rel(
+        "kpa",
+        [
+            Object(NonMatching, "kpa_05.c"),
+        ],
+    ),
+    Rel(
+        "las",
+        [
+            Object(NonMatching, "las_26.c"),
+        ],
+    ),
+    Rel(
         "mri",
         [
             Object(NonMatching, "mri_puni.c"),
