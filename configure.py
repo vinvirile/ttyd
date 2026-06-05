@@ -1170,7 +1170,13 @@ config.libs = [
     Rel(
         "las",
         [
+            Object(NonMatching, "las_00.c"),
+            Object(NonMatching, "las_02.c"),
+            Object(NonMatching, "las_06.c"),
             Object(NonMatching, "las_26.c"),
+            Object(NonMatching, "las_27.c"),
+            Object(NonMatching, "las_30.c"),
+            Object(NonMatching, "unit/unit_black_karon.c"),
         ],
     ),
     Rel(
@@ -1213,6 +1219,7 @@ config.libs = [
         [
             Object(NonMatching, "unit/unit_borodo.c"),
             Object(NonMatching, "unit/unit_ura_noko.c"),
+            Object(NonMatching, "unit/unit_karon.c"),
         ],
     ),
     Rel(
